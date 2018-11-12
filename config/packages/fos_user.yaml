@@ -1,0 +1,12 @@
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: App\Entity\User
+    from_email:
+        address: yegnonsilue@gmail.com
+        sender_name: silue
+    #registration:
+     #   form:
+      #      type: AppBundle\Form\RegistrationType
+        #confirmation:  #envoie d'email à de confirmation après inscription
+        #    enabled: true
