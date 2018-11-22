@@ -34,7 +34,7 @@ DirectoryIndex index.php
     RewriteCond %{HTTP:Authorization} .
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     #Header set Access-Control-Allow-Origin '*'
-    #Header set Access-Control-Allow-Origin https://africemplois.herokuapp.com/api/,*
+    #Header set Access-Control-Allow-Origin https://africemplois.herokuapp.com/login_check,https://africemplois.herokuapp.com/api/offres
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial
