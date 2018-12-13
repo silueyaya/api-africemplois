@@ -1,2 +1,0 @@
-{#{% extends 'base.html.twig' %}#}
-<h1>page erreur 404 à personaliser mode prod</h1>
