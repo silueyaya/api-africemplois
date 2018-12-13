@@ -1,0 +1,154 @@
+easy_admin:
+    site_name: 'AfricEmplois Entreprise'
+    #site_name: '<img src="https://symfony.com/logos/symfony_white_01.png" />' Logo
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd / M / Y H:i:s'
+
+    entities:
+        User:
+            class: App\Entity\User
+            list:
+                fields: ['id', { property: 'niveauEtude.libelleNiveauEtude', label: 'Niveau Etude' }, { property: 'username', label: 'Nom Utilisateur' }, 'email',{ property: 'enabled', label: 'Activé' },{ property: 'lastLogin', label: 'Connecté le' },'roles']
+            
+            show:
+                fields:
+                    - id
+                    - username
+                    - email
+                    - enabled
+                    - lastLogin
+                    - roles
+                    #- { property: 'imageName',label:'Image pièce', type: 'image', base_path: '/images/pieces/' } 
+            
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Informations personnelles',icon: 'id-card-o' }
+                    - nom
+                    - prenom
+                    - { property: 'username', label: 'Nom Utilisateur'}
+                    - email
+                    - { property: 'plainPassword',label: 'Mot de passe' ,type: 'text', type_options: { required: false } }
+                    #- { property: 'imageFile',label:'Image pièce', type: 'file', base_path: base_path: '/images/pieces/' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Adresse de facturation' }
+                    - { property: 'niveauEtude', label: 'Niveau Etude' }
+                    - { property: 'niveauExperienceGlobal', label: 'Niveau Exp ' }
+                    #- { property: 'formation', label: 'Formation' }
+                    #- { property: 'experienceProfessionnelle', label: 'Exp Pro' }
+
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Role et Activation compte' }
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+                    - { property: 'enabled', label: 'Activer'}
+
+
+        Secteur:
+            class: App\Entity\Secteur
+            list:
+                fields:
+                    - id
+                    - libelleSecteur
+            show:
+                fields:
+                    - id
+                    - libelleSecteur
+
+            form:
+                fields:
+                    - libelleSecteur
+
+        SousSecteur:
+            class: App\Entity\SousSecteur
+
+        TypeContrat:
+            class: App\Entity\TypeContrat
+
+        Ville:
+            class: App\Entity\Ville
+
+        NiveauEtude:
+            class: App\Entity\NiveauEtude
+
+        Evenement:
+            class: App\Entity\Evenement
+
+        Candidature:
+            class: App\Entity\Candidature
+
+        NiveauExperienceGlobal:
+            class: App\Entity\NiveauExperienceGlobal
+
+        TypeEvenement:
+            class: App\Entity\TypeEvenement
+
+        Entreprise:
+            class: App\Entity\Entreprise
+            list:
+                fields: ['id','raisonSociale',{ property: 'imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },'email',{ property: 'telephone', label: 'Téléphone' }]
+
+            show:
+                fields: ['id','raisonSociale',{ property: 'imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },'email',{ property: 'telephone', label: 'Téléphone' }]
+
+            form:
+                fields: 
+                    - { type: 'group', css_class: 'col-sm-9', label: 'Informations personnelles',icon: 'id-card-o' }
+                    - raisonSociale
+                    - { property: 'imageFile', label: 'Logo',type: 'file', base_path: '/images/logos/' }
+                    - email
+                    - { property: 'telephone', label: 'Téléphone' }
+
+
+        Offre:
+            class: App\Entity\Offre
+            controller: App\Controller\EasyAdmin\OffreController
+            list:
+                fields: ['id',{ property: 'entreprise.raisonSociale'},{ property: 'entreprise.imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },{ property: 'titreOffre', label: 'Titre' }, { property: 'createdAt',format: 'd-M-Y', label: 'Date Public' }, { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite' }, { property: 'statut', label: 'En Ligne' },{ property: 'validation', label: 'Validation' },{ property: 'ville', label: 'Ville' },{ property: 'entreprise.raisonSociale', label: 'Entreprise' },{ property: 'typeContrat.libelleContrat', label: 'Contrat' },{ property: 'secteur.libelleSecteur', label: 'Secteur' }]
+            show:
+                fields: ['id',{ property: 'entreprise.raisonSociale'},{ property: 'entreprise.imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },{ property: 'titreOffre', label: 'Titre' }, { property: 'createdAt',format: 'd-M-Y', label: 'Date Public' }, { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite' }, { property: 'statut', label: 'En Ligne' },{ property: 'validation', label: 'Validation' },{ property: 'ville', label: 'Ville' },{ property: 'entreprise.raisonSociale', label: 'Entreprise' },{ property: 'typeContrat.libelleContrat', label: 'Contrat' },{ property: 'secteur.libelleSecteur', label: 'Secteur' }]
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-9', label: 'Informations personnelles',icon: 'id-card-o' }
+                    - { property: 'titreOffre', label: 'Titre' }
+                    - descriptionOffre
+                   # - { property: 'createdAt',format: 'd-M-Y', label: 'Date Public', type_options: { widget: 'single_text' }}
+                    - { property: 'createdAt',format: 'd-M-Y', label: 'Date Public'}
+                    - { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite'}
+                    - { property: 'statut', label: 'En Ligne' }
+                    - { property: 'validation', label: 'Validation' }
+                    - { property: 'ville', label: 'Ville' }
+                    - { property: 'entreprise', label: 'Entreprise' }
+                    - { property: 'typeContrat', label: 'Contrat' }
+                    - { property: 'secteur', label: 'Secteur' }
+
+
+
+    design:
+        menu:
+           # - { entity: 'User', icon: 'user', label: 'Utilisateurs' }
+            #- { label: 'Dashboard', route: 'admin_dashboard', default: true }
+            #- { label: 'Open front-end', route: 'app_genus_list' }
+           # - { entity: 'User', label: 'Users', icon: 'user' }
+           # -
+            #    label: 'Genus'
+             #   children:
+              #      -
+               #         entity: 'SousSecteur'
+                 #       label: 'SousSecteur'
+                  #      icon: 'paw'
+                  #      params:
+                   #         action: 'show'
+                    #        id: 2
+
+        assets:
+            favicon: '/assets/backend/zebitcoin.png'
+
+    list:
+        max_results: 10
+        actions:
+            - { name: 'show', icon: 'search' }
+            - { name: 'edit', icon: 'pencil' }
+            - { name: 'delete', icon: 'trash' }
+
+

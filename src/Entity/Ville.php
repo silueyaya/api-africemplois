@@ -19,6 +19,7 @@ class Ville
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"offre_read"})
      */
     private $id;
 
@@ -26,7 +27,7 @@ class Ville
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column( type="string", length=30, nullable=true)
-     * @Groups({"offre"})
+     * @Groups({"offre_read"})
      */
     private $libelleVille;
 
@@ -44,7 +45,7 @@ class Ville
     /**
      * @return string
      */
-    public function getLibelleVille(): string
+    public function getLibelleVille()
     {
         return $this->libelleVille;
     }
@@ -57,6 +58,11 @@ class Ville
     {
         $this->libelleVille = $libelleVille;
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getLibelleVille();
     }
 
 }

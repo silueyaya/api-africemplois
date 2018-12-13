@@ -12,10 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OffreRepository")
  * @ApiResource(
- *          normalizationContext={"groups":{"offre"}}
+ *          normalizationContext={"groups":{"offre_read"}},
+ *          denormalizationContext={"groups":{"offre_write"}},
  * )
  * @ApiFilter(SearchFilter::class, properties={"typeContrat": "exact","ville": "exact","entreprise": "exact","secteur": "exact"})
  */
@@ -27,7 +29,7 @@ class Offre
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"offre"})
+     * @Groups({"offre_read"})
      */
     private $id;
 
@@ -37,7 +39,7 @@ class Offre
      *
      * @ORM\Column(type="string", length=30, nullable=false)
      *
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $titreOffre;
 
@@ -47,24 +49,20 @@ class Offre
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      *
      * @ORM\Column(type="text", nullable=false)
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $descriptionOffre;
 
     /**
-     * @var string
-     * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="datetime")
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $createdAt;
 
 
     /**
-     * @var string
-     * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="datetime")
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $endingAt;
 
@@ -73,7 +71,7 @@ class Offre
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="boolean")
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $statut;
 
@@ -82,7 +80,7 @@ class Offre
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="boolean")
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $validation;
 
@@ -90,7 +88,7 @@ class Offre
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ville")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $ville;
 
@@ -98,14 +96,14 @@ class Offre
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $entreprise;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeContrat")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $typeContrat;
 
@@ -113,7 +111,7 @@ class Offre
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Secteur")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"offre"})
+     * @Groups({"offre_read","offre_write"})
      */
     private $secteur;
 
@@ -121,95 +119,69 @@ class Offre
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
-     * 
      */
     private $user;
 
 
-    /**
-     * @return mixed
-     */
+
     public function getVille()
     {
         return $this->ville;
     }
 
-    /**
-     * @param mixed $ville
-     * @return Offre
-     */
+
     public function setVille($ville)
     {
         $this->ville = $ville;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getEntreprise()
     {
         return $this->entreprise;
     }
 
-    /**
-     * @param mixed $entreprise
-     * @return Offre
-     */
+
     public function setEntreprise($entreprise)
     {
         $this->entreprise = $entreprise;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getTypeContrat()
     {
         return $this->typeContrat;
     }
 
-    /**
-     * @param mixed $typeContrat
-     * @return Offre
-     */
+
     public function setTypeContrat($typeContrat)
     {
         $this->typeContrat = $typeContrat;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getSecteur()
     {
         return $this->secteur;
     }
 
-    /**
-     * @param mixed $secteur
-     * @return Offre
-     */
+
     public function setSecteur($secteur)
     {
         $this->secteur = $secteur;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getUser()
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     * @return Offre
-     */
+
     public function setUser($user)
     {
         $this->user = $user;
@@ -218,121 +190,85 @@ class Offre
 
 
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+
+    public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitreOffre(): string
+
+    public function getTitreOffre()
     {
         return $this->titreOffre;
     }
 
-    /**
-     * @param string $titreOffre
-     * @return Offre
-     */
+
     public function setTitreOffre(string $titreOffre): Offre
     {
         $this->titreOffre = $titreOffre;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getDescriptionOffre()
     {
         return $this->descriptionOffre;
     }
 
-    /**
-     * @param mixed $descriptionOffre
-     * @return Offre
-     */
+
     public function setDescriptionOffre($descriptionOffre)
     {
         $this->descriptionOffre = $descriptionOffre;
         return $this;
     }
 
-    /**
-     *@return string
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param string $createdAt
-     * @return Offre
-     */
-    public function setCreatedAt(string $createdAt): Offre
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndingAt()
+    public function getEndingAt() : ? \DateTimeInterface
     {
         return $this->endingAt;
     }
 
-    /**
-     * @param string $endingAt
-     * @return Offre
-     */
-    public function setEndingAt(string $endingAt): Offre
+    public function setEndingAt(\DateTimeInterface $endingAt) : self
     {
         $this->endingAt = $endingAt;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatut(): string
+
+    public function getStatut()
     {
         return $this->statut;
     }
 
-    /**
-     * @param string $statut
-     * @return Offre
-     */
-    public function setStatut(string $statut): Offre
+
+    public function setStatut(string $statut)
     {
         $this->statut = $statut;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getValidation(): string
+
+    public function getValidation()
     {
         return $this->validation;
     }
 
-    /**
-     * @param string $validation
-     * @return Offre
-     */
-    public function setValidation(string $validation): Offre
+
+    public function setValidation(string $validation)
     {
         $this->validation = $validation;
         return $this;
     }
-
 
 }

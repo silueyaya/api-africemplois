@@ -26,7 +26,7 @@ class TypeContrat
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="string", length=30, nullable=true)
-     * @Groups({"offre"})
+     * @Groups({"offre_read"})
      */
     private $libelleContrat;
 
@@ -57,6 +57,11 @@ class TypeContrat
     {
         $this->libelleContrat = $libelleContrat;
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getLibelleContrat();
     }
 
 

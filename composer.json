@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.1",
         "doctrine/doctrine-migrations-bundle": "^1.3",
+        "easycorp/easyadmin-bundle": "^1.17",
         "friendsofsymfony/user-bundle": "^2.1",
         "lexik/jwt-authentication-bundle": "^2.5",
         "nelmio/api-doc-bundle": "^3.3",
@@ -16,12 +17,13 @@
         "symfony/maker-bundle": "^1.8",
         "symfony/profiler-pack": "^1.0",
         "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/web-server-bundle": "*",
         "symfony/yaml": "*",
-        "vich/uploader-bundle": "^1.8",
-        "symfony/web-server-bundle": "*"
+        "vich/uploader-bundle": "^1.8"
     },
     "require-dev": {
-        "symfony/dotenv": "*"
+        "symfony/dotenv": "*",
+        "symfony/web-server-bundle": "*"
     },
     "config": {
         "preferred-install": {

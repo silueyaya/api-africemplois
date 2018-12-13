@@ -13,7 +13,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *          normalizationContext={"groups":{"sous_secteur"}},
  *          denormalizationContext={"groups":{"sous_secteur"}},
- * 
+ *     itemOperations={
+ *          "get",
+ *          "delete",
+ *         "put"={
+ *             "denormalization_context"={"groups"={"put"}}
+ *         }
+ *     }
  * )
  */
 class SousSecteur
@@ -37,9 +43,9 @@ class SousSecteur
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Secteur")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Secteur", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"sous_secteur"})
+     * @Groups({"sous_secteur","put"})
      */
     private $secteur;
 
@@ -57,7 +63,7 @@ class SousSecteur
     /**
      * @return string
      */
-    public function getLibelleSousSecteur(): string
+    public function getLibelleSousSecteur()
     {
         return $this->libelleSousSecteur;
     }

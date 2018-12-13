@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@api-platform/admin": "^0.6.0",
+    "react-admin": "^2.5.0"
+  },
+  "devDependencies": {
+    "admin-on-rest": "^1.4.1"
+  }
+}

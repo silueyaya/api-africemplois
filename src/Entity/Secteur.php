@@ -9,8 +9,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\SecteurRepository")
+ * @ApiResource(
+ *     itemOperations={
+ *          "get",
+ *          "delete",
+ *         "put"={
+ *             "denormalization_context"={"groups"={"put"}}
+ *         }
+ *     }
+ * 
+ * )
  */
 class Secteur
 {
@@ -20,6 +29,7 @@ class Secteur
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"put"})
      */
     private $id;
 
@@ -28,7 +38,7 @@ class Secteur
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * 
      * @ORM\Column(type="string", length=30, nullable=false)
-     * @Groups({"sous_secteur","offre"})
+     * @Groups({"sous_secteur","offre_read","put"})
      */
     private $libelleSecteur;
 
@@ -46,7 +56,7 @@ class Secteur
     /**
      * @return string
      */
-    public function getLibelleSecteur(): string
+    public function getLibelleSecteur()
     {
         return $this->libelleSecteur;
     }
@@ -61,6 +71,9 @@ class Secteur
         return $this;
     }
 
-
+    public function __toString()
+    {
+        return $this->getLibelleSecteur();
+    }
 
 }

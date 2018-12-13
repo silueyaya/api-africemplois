@@ -1,0 +1,10 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="alert alert-success text-center">
+        <span style="text-align:center;color:green !important">{{ 'registration.check_email'|trans({'%email%': user.email}) }}</span>
+    </div>
+{% endblock fos_user_content %}
+

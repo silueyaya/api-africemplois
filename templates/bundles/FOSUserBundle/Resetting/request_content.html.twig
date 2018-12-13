@@ -1,0 +1,37 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <div>
+        <label for="username">{{ 'resetting.request.username'|trans }}</label>
+        <input type="text" id="username" name="username" required="required" />
+    </div>
+    <div>
+        <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
+    </div>
+</form>
+
+<!--
+  <div class="modal-header">
+
+    <button id="menu-close" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <img src="fonts/myglyphicons/VST01020b1.png"><br/>
+    <h2>Mot de passe oublié</h2>
+
+  </div>
+<div class="modal-body">
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request" novalidate="true" data-async="" data-toggle="validator" role="form" data-target="#Forgotten-pwd" enctype="multipart/form-data">
+
+        <div class="modal-body">
+            <p>Compléter le formulaire, un email vous seras envoyé.<br />
+            Il contiendra la procédure à suivre pour récupérer votre mot de passe.</p>
+            <label for="username">{{ 'resetting.request.username'|trans }}</label>
+            <input type="text" id="username" name="username" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" required="required"/>
+
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
+            <button class="btn btn-theme" type="submit" value="{{ 'resetting.request.submit'|trans }}">Envoyer</button>
+        </div>
+    </form>
+</div>
+ -->
