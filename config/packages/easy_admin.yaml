@@ -7,6 +7,31 @@ easy_admin:
         datetime: 'd / M / Y H:i:s'
 
     entities:
+        Offre:
+            class: App\Entity\Offre
+            controller: App\Controller\EasyAdmin\OffreController
+            list:
+                fields: ['id',{ property: 'entreprise.raisonSociale'},{ property: 'entreprise.imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },{ property: 'titreOffre', label: 'Titre' }, { property: 'createdAt',format: 'd-M-Y', label: 'Date Public' }, { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite' }, { property: 'statut', label: 'En Ligne' },{ property: 'validation', label: 'Validation' },{ property: 'ville', label: 'Ville' },{ property: 'entreprise.raisonSociale', label: 'Entreprise' },{ property: 'typeContrat.libelleContrat', label: 'Contrat' },{ property: 'secteur.libelleSecteur', label: 'Secteur' }]
+            show:
+                fields: ['id',{ property: 'entreprise.raisonSociale'},{ property: 'entreprise.imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },{ property: 'titreOffre', label: 'Titre' }, { property: 'createdAt',format: 'd-M-Y', label: 'Date Public' }, { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite' }, { property: 'statut', label: 'En Ligne' },{ property: 'validation', label: 'Validation' },{ property: 'ville', label: 'Ville' },{ property: 'entreprise.raisonSociale', label: 'Entreprise' },{ property: 'typeContrat.libelleContrat', label: 'Contrat' },{ property: 'secteur.libelleSecteur', label: 'Secteur' }]
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-9', label: 'Informations personnelles',icon: 'id-card-o' }
+                    - { property: 'titreOffre', label: 'Titre' }
+                    - descriptionOffre
+                   # - { property: 'createdAt',format: 'd-M-Y', label: 'Date Public', type_options: { widget: 'single_text' }}
+                    - { property: 'createdAt',format: 'd-M-Y', label: 'Date Public'}
+                    - { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite'}
+                    - { property: 'statut', label: 'En Ligne' }
+                    - { property: 'validation', label: 'Validation' }
+                    - { property: 'ville', label: 'Ville' }
+                    - { property: 'entreprise', label: 'Entreprise' }
+                    - { property: 'typeContrat', label: 'Contrat' }
+                    - { property: 'secteur', label: 'Secteur' }
+
+        Evenement:
+            class: App\Entity\Evenement
+
         User:
             class: App\Entity\User
             list:
@@ -43,7 +68,6 @@ easy_admin:
                     - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
                     - { property: 'enabled', label: 'Activer'}
 
-
         Secteur:
             class: App\Entity\Secteur
             list:
@@ -71,9 +95,6 @@ easy_admin:
         NiveauEtude:
             class: App\Entity\NiveauEtude
 
-        Evenement:
-            class: App\Entity\Evenement
-
         Candidature:
             class: App\Entity\Candidature
 
@@ -100,27 +121,7 @@ easy_admin:
                     - { property: 'telephone', label: 'Téléphone' }
 
 
-        Offre:
-            class: App\Entity\Offre
-            controller: App\Controller\EasyAdmin\OffreController
-            list:
-                fields: ['id',{ property: 'entreprise.raisonSociale'},{ property: 'entreprise.imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },{ property: 'titreOffre', label: 'Titre' }, { property: 'createdAt',format: 'd-M-Y', label: 'Date Public' }, { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite' }, { property: 'statut', label: 'En Ligne' },{ property: 'validation', label: 'Validation' },{ property: 'ville', label: 'Ville' },{ property: 'entreprise.raisonSociale', label: 'Entreprise' },{ property: 'typeContrat.libelleContrat', label: 'Contrat' },{ property: 'secteur.libelleSecteur', label: 'Secteur' }]
-            show:
-                fields: ['id',{ property: 'entreprise.raisonSociale'},{ property: 'entreprise.imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },{ property: 'titreOffre', label: 'Titre' }, { property: 'createdAt',format: 'd-M-Y', label: 'Date Public' }, { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite' }, { property: 'statut', label: 'En Ligne' },{ property: 'validation', label: 'Validation' },{ property: 'ville', label: 'Ville' },{ property: 'entreprise.raisonSociale', label: 'Entreprise' },{ property: 'typeContrat.libelleContrat', label: 'Contrat' },{ property: 'secteur.libelleSecteur', label: 'Secteur' }]
-            form:
-                fields:
-                    - { type: 'group', css_class: 'col-sm-9', label: 'Informations personnelles',icon: 'id-card-o' }
-                    - { property: 'titreOffre', label: 'Titre' }
-                    - descriptionOffre
-                   # - { property: 'createdAt',format: 'd-M-Y', label: 'Date Public', type_options: { widget: 'single_text' }}
-                    - { property: 'createdAt',format: 'd-M-Y', label: 'Date Public'}
-                    - { property: 'endingAt',format: 'd-M-Y', label: 'Date Limite'}
-                    - { property: 'statut', label: 'En Ligne' }
-                    - { property: 'validation', label: 'Validation' }
-                    - { property: 'ville', label: 'Ville' }
-                    - { property: 'entreprise', label: 'Entreprise' }
-                    - { property: 'typeContrat', label: 'Contrat' }
-                    - { property: 'secteur', label: 'Secteur' }
+
 
 
 
