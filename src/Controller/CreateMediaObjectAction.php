@@ -51,6 +51,6 @@ final class CreateMediaObjectAction
         // This will be handled by API Platform and returns a validation error.
         throw new ValidationException($this->validator->validate($mediaObject));
     }
-    
+
 }
 
