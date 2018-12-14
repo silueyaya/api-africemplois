@@ -1,5 +1,5 @@
 easy_admin:
-    site_name: 'AfricEmplois Entreprise'
+    site_name: 'AfricEmplois'
     #site_name: '<img src="https://symfony.com/logos/symfony_white_01.png" />' Logo
     formats:
         date:     'd/m/Y'
@@ -127,7 +127,11 @@ easy_admin:
 
     design:
         menu:
-           # - { entity: 'User', icon: 'user', label: 'Utilisateurs' }
+            #- { entity: 'User', icon: 'user', label: 'Utilisateurs' }
+            #- { label: '' }
+            #- { entity: 'Ville', icon: 'map-marker', label: 'Ville' }
+            #- { entity: 'NiveauEtude', icon: 'book', label: 'Niveau Etude' }
+
             #- { label: 'Dashboard', route: 'admin_dashboard', default: true }
             #- { label: 'Open front-end', route: 'app_genus_list' }
            # - { entity: 'User', label: 'Users', icon: 'user' }
