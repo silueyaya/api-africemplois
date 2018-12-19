@@ -8,14 +8,16 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181204170816 extends AbstractMigration
+final class Version20181218162001 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE offre ADD image_name VARCHAR(255) NOT NULL, ADD image_size INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE evenement ADD entreprise_id INT NOT NULL');
+        $this->addSql('ALTER TABLE evenement ADD CONSTRAINT FK_B26681EA4AEAFEA FOREIGN KEY (entreprise_id) REFERENCES entreprise (id)');
+        $this->addSql('CREATE INDEX IDX_B26681EA4AEAFEA ON evenement (entreprise_id)');
     }
 
     public function down(Schema $schema) : void
@@ -23,6 +25,8 @@ final class Version20181204170816 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE offre DROP image_name, DROP image_size');
+        $this->addSql('ALTER TABLE evenement DROP FOREIGN KEY FK_B26681EA4AEAFEA');
+        $this->addSql('DROP INDEX IDX_B26681EA4AEAFEA ON evenement');
+        $this->addSql('ALTER TABLE evenement DROP entreprise_id');
     }
 }

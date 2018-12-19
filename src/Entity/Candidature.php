@@ -7,9 +7,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use App\Controller\CandidatureAction;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\CandidatureRepository")
+ * @Vich\Uploadable
+ * @ApiResource(iri="http://schema.org/MediaObject", collectionOperations={
+ *     "get",
+ *     "post"={
+ *         "method"="POST",
+ *         "path"="/candidatures",
+ *         "controller"=CandidatureAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
+ * })
  */
 class Candidature
 {
@@ -44,6 +58,19 @@ class Candidature
      */
     private $mailEntreprise;
 
+    /**
+     * @var File|null
+     * @Assert\NotNull()
+     * @Vich\UploadableField(mapping="user_cv", fileNameProperty="cvUrl")
+     */
+    public $file;
+
+    /**
+     * @var string|null
+     * @ORM\Column(nullable=true)
+     * @ApiProperty(iri="http://schema.org/contentUrl")
+     */
+    public $cvUrl;
 
     /**
      * Get id
@@ -127,6 +154,30 @@ class Candidature
         return $this;
     }
     
+    /**
+     * Get the value of cvUrl
+     *
+     * @return  string|null
+     */ 
+    public function getCvUrl()
+    {
+        return $this->cvUrl;
+    }
+    
+    /**
+     * Set the value of cvUrl
+     *
+     * @param  string|null  $cvUrl
+     *
+     * @return  self
+     */ 
+    public function setCvUrl($cvUrl)
+    {
+        $this->cvUrl = $cvUrl;
+        
+        return $this;
+    }
+
     // public function __toString()
      //{
          //return $this->getLibelleVille();

@@ -13,9 +13,12 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ApiResource()
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="App\Repository\EntrepriseRepository")
+ * @ApiResource(
+ *          normalizationContext={"groups":{"entr_read"}},
+ *          denormalizationContext={"groups":{"entr_write"}},
+ * )
  */
 class Entreprise
 {
@@ -25,6 +28,7 @@ class Entreprise
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"offre_read"})
      */
     private $id;
 
@@ -33,45 +37,23 @@ class Entreprise
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * 
      * @ORM\Column(type="string", length=50, nullable=false)
-     * @Groups({"offre_read"})
+     * @Groups({"entr_read","entr_write"})
      */
     private $raisonSociale;
-
-
-    /**
-     * @var string
-     * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     * 
-     * @ORM\Column(length=200, nullable=false)
-     * @Groups({"offre_read"})
-     */
-    private $logo;
-
-
-
-    /**
-     * @var MediaObject|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\MediaObject")
-     * @ORM\JoinColumn(nullable=true)
-     * @ApiProperty(iri="http://schema.org/image")
-     */
-    public $image;
-
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
-     * @Vich\UploadableField(mapping="piece_image", fileNameProperty="imageName", size="imageSize")
-     * 
+     * @Vich\UploadableField(mapping="logo_entr", fileNameProperty="imageName", size="imageSize")
+     * @Groups({"entr_write"})
      * @var File
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
      * @var string
-     * @Groups({"offre_read"})
+     * @Groups({"entr_read","entr_write"})
      */
     private $imageName;
 
@@ -82,13 +64,18 @@ class Entreprise
      */
     private $imageSize;
 
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTime
+     */
+    private $updatedAt;
 
 
     /**
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="string", length=50, nullable=false)
-     * @Groups({"offre_read"})
+     * @Groups({"offre_read","entr_read","entr_write"})
      */
     private $email;
 
@@ -96,8 +83,8 @@ class Entreprise
     /**
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     * 
      * @ORM\Column(type="string", length=11, nullable=false)
+     * @Groups({"entr_read","entr_write"})
      */
     private $telephone;
 
@@ -121,27 +108,9 @@ class Entreprise
      * @param string $raisonSociale
      * @return Entreprise
      */
-    public function setRaisonSociale(string $raisonSociale): Entreprise
+    public function setRaisonSociale(string $raisonSociale) : Entreprise
     {
         $this->raisonSociale = $raisonSociale;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param string $logo
-     * @return Entreprise
-     */
-    public function setLogo(string $logo): Entreprise
-    {
-        $this->logo = $logo;
         return $this;
     }
 
@@ -157,7 +126,7 @@ class Entreprise
      * @param string $email
      * @return Entreprise
      */
-    public function setEmail(string $email): Entreprise
+    public function setEmail(string $email) : Entreprise
     {
         $this->email = $email;
         return $this;
@@ -175,11 +144,12 @@ class Entreprise
      * @param string $telephone
      * @return Entreprise
      */
-    public function setTelephone(string $telephone): Entreprise
+    public function setTelephone(string $telephone) : Entreprise
     {
         $this->telephone = $telephone;
         return $this;
     }
+
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -225,7 +195,6 @@ class Entreprise
     {
         return $this->imageSize;
     }
-
 
     public function __toString()
     {

@@ -5,10 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
  * @ORM\Entity(repositoryClass="App\Repository\EvenementRepository")
+ * @ApiResource(
+ *          normalizationContext={"groups":{"event_read"}},
+ *          denormalizationContext={"groups":{"event_write"}},
+ * )
  */
 class Evenement
 {
@@ -18,58 +22,55 @@ class Evenement
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"event_read"})
      */
     private $id;
 
     /**
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     *
      * @ORM\Column(type="string", length=30, nullable=false)
+     * @Groups({"event_read","event_write"})
      */
     private $titreEvenement;
 
 
     /**
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     *
      * @ORM\Column(type="text", nullable=false)
+     * @Groups({"event_read","event_write"})
      */
     private $descriptionEvenement;
 
 
     /**
-     * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     *
      * @ORM\Column(type="datetime")
+     * @Groups({"event_read","event_write"})
      */
     private $createdAtEvenement;
 
 
     /**
-     * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     *
      * @ORM\Column(type="datetime")
+     * @Groups({"event_read","event_write"})
      */
     private $endingAtEvenement;
 
 
     /**
-     * @var string
-     * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     *
+     * @var boolean
      * @ORM\Column(type="boolean")
+     * @Groups({"event_read","event_write"})
      */
     private $statutEvenement;
 
 
     /**
-     * @var string
-     * @Assert\NotBlank(message="Veiller saisir une valeur svp")
-     *
+     * @var boolean
      * @ORM\Column(type="boolean")
+     * @Groups({"event_read","event_write"})
      */
     private $validationEvenement;
 
@@ -77,13 +78,22 @@ class Evenement
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ville", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"event_read","event_write"})
      */
     private $ville;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"event_read","event_write"})
+     */
+    private $entreprise;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeEvenement", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"event_read","event_write"})
      */
     private $typeEvenement;
 
@@ -91,6 +101,7 @@ class Evenement
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"event_read","event_write"})
      */
     private $user;
 
@@ -98,7 +109,7 @@ class Evenement
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -106,7 +117,7 @@ class Evenement
     /**
      * @return string
      */
-    public function getTitreEvenement(): string
+    public function getTitreEvenement()
     {
         return $this->titreEvenement;
     }
@@ -139,73 +150,53 @@ class Evenement
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatedAtEvenement()
+
+
+    public function getCreatedAtEvenement() : ? \DateTimeInterface
     {
         return $this->createdAtEvenement;
     }
 
-    /**
-     * @param string $createdAtEvenement
-     * @return Evenement
-     */
-    public function setCreatedAtEvenement(string $createdAtEvenement): Evenement
+    public function setCreatedAtEvenement(\DateTimeInterface $createdAtEvenement) : self
     {
         $this->createdAtEvenement = $createdAtEvenement;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndingAtEvenement()
+    public function getEndingAtEvenement() : ? \DateTimeInterface
     {
         return $this->endingAtEvenement;
     }
 
-    /**
-     * @param string $endingAtEvenement
-     * @return Evenement
-     */
-    public function setEndingAtEvenement(string $endingAtEvenement): Evenement
+    public function setEndingAtEvenement(\DateTimeInterface $endingAtEvenement) : self
     {
         $this->endingAtEvenement = $endingAtEvenement;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatutEvenement(): string
+    
+
+    public function getStatutEvenement()
     {
         return $this->statutEvenement;
     }
 
-    /**
-     * @param string $statutEvenement
-     * @return Evenement
-     */
-    public function setStatutEvenement(string $statutEvenement): Evenement
+
+    public function setStatutEvenement($statutEvenement)
     {
         $this->statutEvenement = $statutEvenement;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getValidationEvenement(): string
+
+    public function getValidationEvenement()
     {
         return $this->validationEvenement;
     }
 
-    /**
-     * @param string $validationEvenement
-     * @return Evenement
-     */
-    public function setValidationEvenement(string $validationEvenement): Evenement
+
+    public function setValidationEvenement($validationEvenement)
     {
         $this->validationEvenement = $validationEvenement;
         return $this;
@@ -229,6 +220,20 @@ class Evenement
         $this->ville = $ville;
         return $this;
     }
+
+
+    public function getEntreprise()
+    {
+        return $this->entreprise;
+    }
+
+
+    public function setEntreprise($entreprise)
+    {
+        $this->entreprise = $entreprise;
+        return $this;
+    }
+
 
 
     /**

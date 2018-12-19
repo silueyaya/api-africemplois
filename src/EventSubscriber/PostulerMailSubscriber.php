@@ -34,12 +34,12 @@ final class PostulerMailSubscriber implements EventSubscriberInterface
         if (!$candidature instanceof Candidature || Request::METHOD_POST !== $method) {
             return;
         }
-
+//$candidature->getMailEntreprise()'silueyegnon@univmetiers.ci'
         $message = (new \Swift_Message('Candidature à votre offre'))
-            ->setFrom('superhitya2@gmail.com')
+            ->setFrom(['superhitya2@gmail.com'=>'AfricEmploi'])
             ->setTo($candidature->getMailEntreprise())
+           // ->attach(\Swift_Attachment::fromPath('/public/images/logos/AFRICEMPLOI_Africemploi-1.png'))
             ->setBody(sprintf('L\'utilisateur ayant pour Mail #%s vient de postuler à votre Offre.', $candidature->getMailUser()));
-
         $this->mailer->send($message);
     }
 }

@@ -1,16 +1,17 @@
 <?php
-// src/Form/MediaObjectType.php
+// src/Form/CandidatureObjectType.php
 
 namespace App\Form;
 
-use App\Entity\MediaObject;
+use App\Entity\Candidature;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
-final class MediaObjectType extends AbstractType
+final class CandidatureObjectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,14 +21,18 @@ final class MediaObjectType extends AbstractType
                 'label' => 'label.file',
                 'required' => false,
             ])
+            //->add('mailUser', EmailType::class, ['label' => 'mailUser'])
+            ->add('titreOffre', TextType::class)
+            ->add('mailUser', TextType::class)
             ->add('mailEntreprise', TextType::class)
+
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MediaObject::class,
+            'data_class' => Candidature::class,
             'csrf_protection' => false,
         ]);
     }

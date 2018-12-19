@@ -43,7 +43,7 @@ class TypeEvenement
     /**
      * @return string
      */
-    public function getLibelleTypeEvenement(): string
+    public function getLibelleTypeEvenement()
     {
         return $this->libelleTypeEvenement;
     }

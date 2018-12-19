@@ -44,7 +44,7 @@ class TypeContrat
     /**
      * @return string
      */
-    public function getLibelleContrat(): string
+    public function getLibelleContrat()
     {
         return $this->libelleContrat;
     }

@@ -38,7 +38,7 @@ class MediaObject
     /**
      * @var File|null
      * @Assert\NotNull()
-     * @Vich\UploadableField(mapping="media_object", fileNameProperty="contentUrl")
+     * @Vich\UploadableField(mapping="user_cv", fileNameProperty="contentUrl")
      */
     public $file;
 
@@ -48,6 +48,14 @@ class MediaObject
      * @ApiProperty(iri="http://schema.org/contentUrl")
      */
     public $contentUrl;
+
+
+    /**
+     * @var string
+     * @Assert\NotBlank(message="Veiller saisir une valeur svp")
+     * @ORM\Column(type="string", length=50, nullable=false)
+     */
+    private $mailEntreprise;
 
     /**
      * Get id
@@ -59,5 +67,29 @@ class MediaObject
         return $this->id;
     }
     
+
+    /**
+     * Get the value of mailEntreprise
+     *
+     * @return  string
+     */ 
+    public function getMailEntreprise()
+    {
+        return $this->mailEntreprise;
+    }
+
+    /**
+     * Set the value of mailEntreprise
+     *
+     * @param  string  $mailEntreprise
+     *
+     * @return  self
+     */ 
+    public function setMailEntreprise(string $mailEntreprise)
+    {
+        $this->mailEntreprise = $mailEntreprise;
+
+        return $this;
+    }
 }
 
