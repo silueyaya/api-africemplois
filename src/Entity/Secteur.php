@@ -37,7 +37,7 @@ class Secteur
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * 
-     * @ORM\Column(type="string", length=30, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      * @Groups({"sous_secteur","offre_read","put"})
      */
     private $libelleSecteur;

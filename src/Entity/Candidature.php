@@ -15,7 +15,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CandidatureRepository")
  * @Vich\Uploadable
- * @ApiResource(iri="http://schema.org/MediaObject", collectionOperations={
+ * @ApiResource(iri="http://schema.org/MediaObject",
+ *          normalizationContext={"groups":{"candida_read"}},
+ *          denormalizationContext={"groups":{"candida_write"}},
+ *  collectionOperations={
  *     "get",
  *     "post"={
  *         "method"="POST",
@@ -33,6 +36,7 @@ class Candidature
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"candida_read"})
      */
     private $id;
 
@@ -40,7 +44,7 @@ class Candidature
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="string", length=30, nullable=false)
-     *
+     * @Groups({"candida_read","candida_write"})
      */
     private $titreOffre;
 
@@ -48,6 +52,7 @@ class Candidature
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="string", length=50, nullable=false)
+     * @Groups({"candida_read","candida_write"})
      */
     private $mailUser;
 
@@ -55,13 +60,15 @@ class Candidature
      * @var string
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * @ORM\Column(type="string", length=50, nullable=false)
+     * @Groups({"candida_read","candida_write"})
      */
     private $mailEntreprise;
 
     /**
      * @var File|null
      * @Assert\NotNull()
-     * @Vich\UploadableField(mapping="user_cv", fileNameProperty="cvUrl")
+     * @Vich\UploadableField(mapping="user_cv", fileNameProperty="cvUrl", size="cvSize")
+     * @Groups({"candida_write"})
      */
     public $file;
 
@@ -69,8 +76,22 @@ class Candidature
      * @var string|null
      * @ORM\Column(nullable=true)
      * @ApiProperty(iri="http://schema.org/contentUrl")
+     * @Groups({"candida_read","candida_write"})
      */
     public $cvUrl;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var integer
+     */
+    private $cvSize;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * Get id
@@ -155,27 +176,44 @@ class Candidature
     }
     
     /**
-     * Get the value of cvUrl
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @return  string|null
-     */ 
-    public function getCvUrl()
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setFile(? File $cv = null) : void
+    {
+        $this->file = $cv;
+
+        if (null !== $cv) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getFile() : ? File
+    {
+        return $this->file;
+    }
+
+    public function getCvUrl() : ? string
     {
         return $this->cvUrl;
     }
-    
-    /**
-     * Set the value of cvUrl
-     *
-     * @param  string|null  $cvUrl
-     *
-     * @return  self
-     */ 
-    public function setCvUrl($cvUrl)
+
+    public function setcvSize(? int $cvSize) : void
     {
-        $this->cvUrl = $cvUrl;
-        
-        return $this;
+        $this->cvSize = $cvSize;
+    }
+
+    public function getcvSize() : ? int
+    {
+        return $this->cvSize;
+
     }
 
     // public function __toString()

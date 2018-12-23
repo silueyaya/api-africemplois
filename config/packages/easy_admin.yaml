@@ -118,6 +118,9 @@ easy_admin:
 
         Candidature:
             class: App\Entity\Candidature
+            list:
+                fields: ['id','titreOffre','mailUser','mailEntreprise',{ property: 'cvUrl', label: 'cv', base_path: '/images/cv' }]
+
 
         NiveauExperienceGlobal:
             class: App\Entity\NiveauExperienceGlobal
