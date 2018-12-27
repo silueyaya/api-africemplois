@@ -53,7 +53,7 @@ class Entreprise
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
-     * @Groups({"entr_read","entr_write"})
+     * @Groups({"offre_read","entr_read","entr_write"})
      */
     private $imageName;
 

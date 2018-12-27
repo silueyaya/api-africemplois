@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OffreRepository")
  * @ApiResource(
+ *           attributes={"order"={"id": "DESC"}},
  *          normalizationContext={"groups":{"offre_read"}},
  *          denormalizationContext={"groups":{"offre_write"}},
  * )
