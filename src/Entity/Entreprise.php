@@ -28,7 +28,7 @@ class Entreprise
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"offre_read"})
+     * @Groups({"offre_read","entr_read"})
      */
     private $id;
 
@@ -37,7 +37,7 @@ class Entreprise
      * @Assert\NotBlank(message="Veiller saisir une valeur svp")
      * 
      * @ORM\Column(type="string", length=50, nullable=false)
-     * @Groups({"entr_read","entr_write"})
+     * @Groups({"offre_read","event_read","entr_read","entr_write"})
      */
     private $raisonSociale;
 
@@ -53,7 +53,7 @@ class Entreprise
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
-     * @Groups({"offre_read","entr_read","entr_write"})
+     * @Groups({"offre_read","event_read","entr_read","entr_write"})
      */
     private $imageName;
 
