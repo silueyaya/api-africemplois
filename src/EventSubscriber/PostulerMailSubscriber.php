@@ -34,14 +34,14 @@ final class PostulerMailSubscriber implements EventSubscriberInterface
         if (!$candidature instanceof Candidature || Request::METHOD_POST !== $method) {
             return;
         }
-//$candidature->getMailEntreprise()'silueyegnon@univmetiers.ci' ['superhitya2@gmail.com'=>'AfricEmploi']
+
         $message = (new \Swift_Message('Candidature à votre offre'))
-            ->setFrom(['superhitya2@gmail.com' => 'AfricEmploi'])
-            ->setTo($candidature->getMailEntreprise())// http : //127.0.0.1:8000/images/logos/2000px-MTN_Logo.svg.png
+            ->setFrom(['superhitya2@gmail.com' => 'AfricEmplois'])
+            ->setTo($candidature->getMailEntreprise())
             //->attach(\Swift_Attachment::fromPath('http://d1pwix07io15pr.cloudfront.net/v9dffeddd70/images/logos/sf-positive.svg'))
             ->attach( \Swift_Attachment::fromPath('http://africemplois.herokuapp.com/images/cv/'. $candidature->getCvUrl()))
             //->attach(\Swift_Attachment::fromPath('http : //127.0.0.1:8000/images/cv/'. $candidature->getCvUrl()), 'application/pdf')
-            ->setBody(sprintf('L\'utilisateur ayant pour Mail #%s vient de postuler à votre Offre.', $candidature->getMailUser()));
+            ->setBody(sprintf('Le candidat ayant pour E-mail %s vient de postuler à votre Offre [ %s ].', $candidature->getMailUser() ,$candidature->getTitreOffre()));
         $this->mailer->send($message);
     }
 }
