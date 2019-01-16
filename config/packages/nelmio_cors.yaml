@@ -1,7 +1,7 @@
 nelmio_cors:
     defaults:
         allow_credentials: false 
-        allow_origin: []
+        #allow_origin: []
         allow_headers: []
         allow_methods: []
         expose_headers: []
@@ -19,7 +19,7 @@ nelmio_cors:
         '^/':
             origin_regex: true
             #['^http://africemplois.herokuapp.com:80']
-            allow_origin: ['*']
+            #allow_origin: ['*']
             allow_headers: ['X-Requested-With', 'Content-Type', 'Origin', 'Authorization', 'Accept','Client-Security-Token', 'Accept-Encoding']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
