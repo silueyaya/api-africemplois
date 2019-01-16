@@ -9,6 +9,8 @@ framework:
     session:
         handler_id: ~
 
+    form: { enabled: true }
+
     templating:
         engines: ['twig']
 
