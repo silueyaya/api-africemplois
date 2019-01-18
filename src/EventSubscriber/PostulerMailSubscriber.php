@@ -35,7 +35,8 @@ final class PostulerMailSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $message = (new \Swift_Message('Candidature à votre offre [ %s ].', $candidature->getTitreOffre()))
+        $message = (new \Swift_Message())
+            ->setSubjet(sprintf('Candidature à votre offre [ %s ].', $candidature->getTitreOffre()))
             ->setFrom(['superhitya2@gmail.com' => 'AfricEmplois'])
             ->setTo($candidature->getMailEntreprise())
             //->attach(\Swift_Attachment::fromPath('http://d1pwix07io15pr.cloudfront.net/v9dffeddd70/images/logos/sf-positive.svg'))
