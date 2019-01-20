@@ -1,10 +1,23 @@
 nelmio_cors:
     defaults:
+        allow_credentials: false 
         origin_regex: true
+        forced_allow_origin_value: ~
         allow_origin: ['%env(ALLOW_ORIGIN)%']
         allow_methods: ['%env(ALLOW_METHODS)%']
         allow_headers: ['%env(ALLOW_HEADERS)%']
         expose_headers: ['Link']
         max_age: 3600
     paths:
-        '^/': ~
+        '^/api/':
+            allow_origin: ['%env(ALLOW_ORIGIN)%']
+            allow_headers: ['%env(ALLOW_HEADERS)%']
+            allow_methods: ['%env(ALLOW_METHODS)%']
+            max_age: 3600
+        '^/':
+            origin_regex: true
+            allow_origin: ['%env(ALLOW_ORIGIN)%']
+            allow_headers: ['%env(ALLOW_HEADERS)%']
+            allow_methods: ['%env(ALLOW_METHODS)%']
+            max_age: 3600
+            hosts: ['^api\.']
