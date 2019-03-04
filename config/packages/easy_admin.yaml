@@ -133,6 +133,7 @@ easy_admin:
 
         Entreprise:
             class: App\Entity\Entreprise
+            controller: App\Controller\EasyAdmin\EntrepriseController
             list:
                 fields: ['id','raisonSociale',{ property: 'imageName', label: 'Logo',type: 'image', base_path: '/images/logos/' },'email',{ property: 'telephone', label: 'Téléphone' , type: 'tel'}]
 
